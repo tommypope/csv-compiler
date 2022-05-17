@@ -1,15 +1,16 @@
-// Script to combile records into master CSV file
+// script to combile records into master csv file
 //
+// fields:
 // Source,First Name,Last Name,Affiliation,Email,Phone,Origin,Instagram
 //
-// 1. Compile all CSV files into main file
-// 2. Sort file alphabetically by Last Name
-// 3. Check for multiple records with same First Name & Last Name
-//     -When multiple records with same First Name & Last Name, combine records into 1
-//     -When combining records, if both have a populated field, prefer the last
+// 1. compile all csv files into main file
+// 2. sort file alphabetically by 'Last Name'
+// 3. check for multiple records with same 'First Name' and 'Last Name'
+//     -when multiple records with same 'First Name' and 'Last Name', combine records into 1
+//     -when combining records, if both have a populated field, prefer the last
 //
 
-const FIELDS = {
+const fields = {
   'Source': [],
   'First Name': [],
   'Last Name': [],
@@ -21,4 +22,4 @@ const FIELDS = {
 }
 
 // use fs.readfile fs.writefile?
-// something to convert csv into mutable JS object? papaparse
+// something to convert csv into mutable json? papaparse
