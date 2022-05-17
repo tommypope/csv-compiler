@@ -21,4 +21,4 @@ const FIELDS = {
 }
 
 // use fs.readfile fs.writefile?
-// something to convert csv into mutable JS object?
+// something to convert csv into mutable JS object? papaparse
