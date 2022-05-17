@@ -3,14 +3,9 @@
 // Fields:
 // Source,First Name,Last Name,Affiliation,Email,Phone,Origin,Instagram
 //
-// 1. Compile all csv files into main file
-// 2. Sort file alphabetically by 'Last Name'
-// 3. Check for multiple records with same 'First Name' and 'Last Name'
-//     -When multiple records with same 'First Name' and 'Last Name', combine records into 1
-//     -When combining records, if both have a populated field, prefer the last
-//
 
 import fs from 'node:fs';
+import Papa from 'papaparse';
 
 const fields = {
   'Source': [],
@@ -23,10 +18,39 @@ const fields = {
   'Instagram': []
 }
 
-// Use fs.readfile fs.writefile?
-// Something to convert csv into mutable json? papaparse
+const parseComplete = (results, file) => {
+  console.log(results, file);
+}
 
+const parseError = (err, file) => {
+  console.log(err, file);
+}
+
+const papaparseConfig = {
+  delimiter: ',',
+  header: true,
+  skipEmptyLines: true,
+  complete: parseComplete,
+  error: parseError
+}
+
+// Iterate thru to-compile/ files
 fs.readdir('to-compile/', (err, data) => {
   if (err) throw err;
-  console.log(data);
+  data.forEach(filepath => organizeFile(filepath));
 });
+
+// For each file
+//   -Edit fields to be uniform with fields object
+//   -Append to main.csv
+const organizeFile = (filepath) => {
+  console.log(filepath);
+  fs.readFile('to-compile/' + filepath,'utf8', (err, data) => {
+    if (err) throw err;
+    Papa.parse(data, papaparseConfig);
+  });
+}
+
+// In main.csv
+//   -Sort by 'Last Name'
+//   -Combine records with same 'Email'

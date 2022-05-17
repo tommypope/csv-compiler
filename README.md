@@ -11,6 +11,6 @@ Put misc files in the `to-compile/` folder.
 Install dependencies and run the script:
 ```
 npm install
-npm run compile
+node script.js
 ```
 Then your main file will be generated in the `compiled/` folder.

@@ -4,9 +4,6 @@
   "description": "This script will compile many CSV files into one main file: `main.csv`",
   "main": "script.js",
   "type": "module",
-  "scripts": {
-    "compile": "node script.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tommypope/csv-compiler.git"
