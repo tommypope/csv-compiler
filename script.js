@@ -9,3 +9,16 @@
 //     -When combining records, if both have a populated field, prefer the last
 //
 
+const FIELDS = {
+  'Source': [],
+  'First Name': [],
+  'Last Name': [],
+  'Affiliation': [],
+  'Email': [],
+  'Phone': [],
+  'Origin': [],
+  'Instagram': []
+}
+
+// use fs.readfile fs.writefile?
+// something to convert csv into mutable JS object?
