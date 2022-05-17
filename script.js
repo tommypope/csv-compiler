@@ -10,6 +10,8 @@
 //     -When combining records, if both have a populated field, prefer the last
 //
 
+import fs from 'node:fs';
+
 const fields = {
   'Source': [],
   'First Name': [],
@@ -23,3 +25,8 @@ const fields = {
 
 // Use fs.readfile fs.writefile?
 // Something to convert csv into mutable json? papaparse
+
+fs.readdir('to-compile/', (err, data) => {
+  if (err) throw err;
+  console.log(data);
+});
