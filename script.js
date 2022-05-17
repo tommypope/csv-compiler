@@ -19,11 +19,14 @@ const fields = {
 }
 
 const parseComplete = (results, file) => {
+  // Edit fields to be uniform with fields object
+  // Append to main.csv
   console.log(results, file);
 }
 
 const parseError = (err, file) => {
-  console.log(err, file);
+  console.log('Error parsing file: ', file);
+  console.log(err);
 }
 
 const papaparseConfig = {
@@ -40,9 +43,7 @@ fs.readdir('to-compile/', (err, data) => {
   data.forEach(filepath => organizeFile(filepath));
 });
 
-// For each file
-//   -Edit fields to be uniform with fields object
-//   -Append to main.csv
+// Pass each file to parseComplete function
 const organizeFile = (filepath) => {
   console.log(filepath);
   fs.readFile('to-compile/' + filepath,'utf8', (err, data) => {
