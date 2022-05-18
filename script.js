@@ -1,57 +1,18 @@
-// Script to combile records into master csv file
-//
-// Fields:
-// Source,First Name,Last Name,Affiliation,Email,Phone,Origin,Instagram
-//
-
-import fs from 'node:fs';
+import fs from 'node:fs/promises';
 import Papa from 'papaparse';
+import compileConfig from './modules/compile.js';
+import sortConfig from './modules/sort.js';
 
-const fields = {
-  'Source': [],
-  'First Name': [],
-  'Last Name': [],
-  'Affiliation': [],
-  'Email': [],
-  'Phone': [],
-  'Origin': [],
-  'Instagram': []
+const compileFile = filepath => {
+  return fs.readFile('to-compile/' + filepath, 'utf8')
+    .then(data => Papa.parse(data, compileConfig))
+    .catch(err => console.log(err));
 }
 
-const parseComplete = (results, file) => {
-  // Edit fields to be uniform with fields object
-  // Append to main.csv
-  console.log(results, file);
-}
-
-const parseError = (err, file) => {
-  console.log('Error parsing file: ', file);
-  console.log(err);
-}
-
-const papaparseConfig = {
-  delimiter: ',',
-  header: true,
-  skipEmptyLines: true,
-  complete: parseComplete,
-  error: parseError
-}
-
-// Iterate thru to-compile/ files
-fs.readdir('to-compile/', (err, data) => {
-  if (err) throw err;
-  data.forEach(filepath => organizeFile(filepath));
-});
-
-// Pass each file to parseComplete function
-const organizeFile = (filepath) => {
-  console.log(filepath);
-  fs.readFile('to-compile/' + filepath,'utf8', (err, data) => {
-    if (err) throw err;
-    Papa.parse(data, papaparseConfig);
-  });
-}
-
-// In main.csv
-//   -Sort by 'Last Name'
-//   -Combine records with same 'Email'
+await fs.readdir('to-compile/')
+  .then(async (files) => {
+    for (const file of files) await compileFile(file);
+  })
+  .then(() => fs.readFile('compiled/main.csv', 'utf8'))
+  .then(data => Papa.parse(data, sortConfig))
+  .catch(err => console.log(err));
