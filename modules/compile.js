@@ -17,6 +17,8 @@ const fields = {
 const compileComplete = async (results) => {
   let records = results.data;
 
+  console.log('Compiling data...');
+
   return await Promise.all(records.filter(async (record) => {
     let entries = Object.entries(record);
     
@@ -26,7 +28,10 @@ const compileComplete = async (results) => {
       .catch(err => console.log(err));
   }))
     .then(filteredRecords => Papa.unparse(filteredRecords))
-    .then(data => fs.appendFile('compiled/main.csv', data))
+    .then(data => {
+      console.log('Appending data to main.csv');
+      fs.appendFile('compiled/main.csv', data)
+    })
     .catch(err => console.log(err));
 }
 

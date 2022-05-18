@@ -11,6 +11,8 @@ const sortComplete = async (results) => {
   let records = results.data;
   let reduced = {};
 
+  console.log('Reducing main.csv...');
+
   return await Promise.all(records.map(async (record) => {
     if (!reduced[record[reducer]]) {
       reduced[record[reducer]] = record;
@@ -32,6 +34,9 @@ const sortComplete = async (results) => {
       }));
     })
     .then(async (reducedArray) => {
+
+      console.log('Sorting main.csv...');
+
       return await Promise.all(reducedArray.sort((a, b) => {
         if (a[sorter].toLowerCase() > b[sorter].toLowerCase()) {
           return 1;
@@ -44,7 +49,7 @@ const sortComplete = async (results) => {
     })
     .then(sorted => Papa.unparse(sorted))
     .then(data => fs.writeFile('compiled/main.csv', data))
-    .then(() => console.log('Sorted main.csv'))
+    .then(() => console.log('Compiled main.csv'))
     .catch(err => console.log(err));
 }
 

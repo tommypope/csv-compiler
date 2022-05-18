@@ -11,6 +11,7 @@ const compileFile = filepath => {
 
 await fs.readdir('to-compile/')
   .then(async (files) => {
+    console.log('Reading to-compile/ files...');
     for (const file of files) await compileFile(file);
   })
   .then(() => fs.readFile('compiled/main.csv', 'utf8'))
