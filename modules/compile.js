@@ -1,5 +1,8 @@
 import fs from 'node:fs/promises';
 import Papa from 'papaparse';
+
+// Change property names to desired CSV fields
+// In each property's array, add all other fields to be compiled
 const fields = {
   'Source': ['Source'],
   'First Name': ['First Name'],

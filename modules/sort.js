@@ -1,42 +1,48 @@
 import fs from 'node:fs/promises';
 import Papa from 'papaparse';
 
+// Change 'Email' to desired reducer
+const reducer = 'Email';
+
+// Change 'Last Name' to desired sorter
+const sorter = 'Last Name';
+
 const sortComplete = async (results) => {
   let records = results.data;
-  let reducedByEmail = {};
+  let reduced = {};
 
   return await Promise.all(records.map(async (record) => {
-    if (!reducedByEmail[record['Email']]) {
-      reducedByEmail[record['Email']] = record;
+    if (!reduced[record[reducer]]) {
+      reduced[record[reducer]] = record;
       return;
     } else {
       let entries = Object.entries(record);
       entries.forEach(entry => {
         let prop = entry[0];
         let val = entry[1];
-        reducedByEmail[record['Email']][prop] = val;
+        reduced[record[reducer]][prop] = val;
       });
       return;
     }
   }))
     .then(async () => {
-      let reducedEntries = Object.entries(reducedByEmail);
+      let reducedEntries = Object.entries(reduced);
       return await Promise.all(reducedEntries.map(reducedEntry => {
         return reducedEntry[1];
       }));
     })
     .then(async (reducedArray) => {
       return await Promise.all(reducedArray.sort((a, b) => {
-        if (a['Last Name'].toLowerCase() > b['Last Name'].toLowerCase()) {
+        if (a[sorter].toLowerCase() > b[sorter].toLowerCase()) {
           return 1;
         }
-        if (a['Last Name'].toLowerCase() < b['Last Name'].toLowerCase()) {
+        if (a[sorter].toLowerCase() < b[sorter].toLowerCase()) {
           return -1;
         }
         return 0;
       }));
     })
-    .then(sortedByLastName => Papa.unparse(sortedByLastName))
+    .then(sorted => Papa.unparse(sorted))
     .then(data => fs.writeFile('compiled/main.csv', data))
     .then(() => console.log('Sorted main.csv'))
     .catch(err => console.log(err));
