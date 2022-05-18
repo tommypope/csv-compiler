@@ -22,7 +22,7 @@ const compileComplete = async (results) => {
   return await Promise.all(records.filter(async (record) => {
     let entries = Object.entries(record);
     
-    // Need to check for all strings in fields obj
+    // FIX: Need to check for all strings in fields obj
     return await Promise.all(entries.filter(entry => fields[entry[0]] ? entry : null))
       .then(filteredEntries => Object.fromEntries(filteredEntries))
       .catch(err => console.log(err));
