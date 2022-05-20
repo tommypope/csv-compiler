@@ -2,11 +2,11 @@
 
 This script will compile many CSV files into one main file: `main.csv`
 
-In `modules/compile.js` modify the `fields` object.
+In `script.js` modify the `fields` object.
 Change the property names to your desires CSV fields.
 Then in each property's array, add all other fields that should be compiled in the desired field.
 
-In `modules/sort.js` modify the reducer and sorter variables.
+In `script.js` modify the reducer and sorter variables.
 Change 'Email' to desired reducer.
 Change 'Last Name' to desired sorter.
 
